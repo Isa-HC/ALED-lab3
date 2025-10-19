@@ -78,7 +78,18 @@ public class FASTAReaderSuffixes extends FASTAReader {
 	 */
 	@Override
 	public List<Integer> search(byte[] pattern) {
-		// TODO
+	//Inicialización 
+	int lo = 0;
+	int hi = suffixes.length; 
+	boolean found = false; 
+	int index = 0; 
+	
+	//Continuación de la coincidencia: en cada iteración calcula el índice medio m
+	int posSuffix = suffixes
+	
+	
+	
+		
 		return null;
 	}
 

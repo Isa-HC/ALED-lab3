@@ -199,7 +199,7 @@ public class FASTAReader {
 
 		return secCoincidente;
 
-}sta 
+}
 
 	/**
 	 * Implements a linear search to look for the provided pattern in the data array
@@ -221,7 +221,6 @@ public class FASTAReader {
 				if (compareNumErrors (pattern, i) == 0 || compareNumErrors (pattern, i) == 1)
 					secCoincidenteSnv.add(i);
 			} catch (FASTAException e) {
-				// TODO Auto-generated catch block
 			}
 
 			return secCoincidenteSnv;

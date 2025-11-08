@@ -86,20 +86,74 @@ public class FASTAReaderSuffixes extends FASTAReader {
 	boolean found = false; 
 	int index = 0; 
 	
-	while (!found && hi-lo<1) {
+	//Mientras found sea false y mientras que hi-lo sea mayor que 1, entonces se ejecuta el bucle while. 
+	//En el enunciado de la práctica, realmente lo pone "al revés", porque nos da la condición de terminación,
+	//pero los bucles while se usan poniendo entre paréntesis la condición que se tiene que dar para que siga ejecut. 
+	while (!found && hi-lo>1) {
+		
+		//La m siempre es así en búsqueda binaria
 		int m = (lo + hi)/2;
+		
+		//Me voy a guardar en una variable que se llama posSuffix el numerito interno que hay dentro de la pos m 
+		//del array suffixes. Lo que guardo en esa variable, ES UN OBJETO SUFFIX!!!!
 		int posSuffix = this.suffixes[m].suffixIndex;
+		
+		//Ahora buscamos como tal la palabara que queremos dentro del sufijo. A medida que van coicidiendo las letras,
+		//voy aumentando la variable index, de forma que si la palabra que queria tenía 3 letras y he incrementado 
+		//la variable index 3 veces, querrá decir que he encontrado la palabra. 
+		//Tenemos que tener cuidado de que el index no se salga ni del pattern (palabra que buscamos), ni del 
+		//content[posSuffix] (sufijo donde estamos buscando). Esto son las dos sentencias iniciales del while. Ya la
+		//tercera es que vaya coincidiendo las letras (pattern [index]== content[posSuffix]). 
 		while(posSuffix + index  < content.length && index < pattern.length && pattern [index]== content[posSuffix]);
 			index ++;
+			
+	
 		if (index == pattern.length) {
 			resultados.add(posSuffix);
-			found = true; 
-		}
+			found = true; //con esto solo encontramos una coincidencia 
+			
+			//recorro hacia detrás 
+			int i = 1;
+			do {
+				index = 0; 
+				//recorro hacia detrás 
+				posSuffix = suffixes[m-i].suffixIndex;
+				//misma sentencia de comprobación de cada una de las letras 
+				while(posSuffix + index  < content.length && index < pattern.length && pattern [index]== content[posSuffix])
+				index ++;
+				
+			if (index == pattern.length)
+				resultados.add(posSuffix);
+			i ++; 
+			
+			}
+			while(index==pattern.length);
+		
+		//recorro hacia delante
+	    i = 1;
+		do {
+			index = 0; 
+			//recorro hacia delante 
+			posSuffix = suffixes[m+i].suffixIndex;
+			//misma sentencia de comprobación de cada una de las letras 
+			while(posSuffix + index  < content.length && index < pattern.length && pattern [index]== content[posSuffix])
+				index ++;
+			
+		if (index == pattern.length) 
+			resultados.add(posSuffix);
+		i ++; 
+		
+	} 
+		while(index==pattern.length);
+			
+}
+		//He buscado en medio pero no era ahí, ahora me voy para un lado o para otro. Irme o un lado a otro me lo dirá
+		//si la letra está alfabéticamente antes o despu
 		else {
 			if (pattern [index]< content[posSuffix + index])
-				hi = m--;
+				hi = m--; //descartamos la mitad derecha. TE VAS A LA IZQUIERDA 
 			else 
-				lo = m++;
+				lo = m++; //descartamos la mitad izquierda. TE VAS A LA DERECHA 
 			index = 0; 
 		}
 	
